@@ -60,4 +60,3 @@ export function ProgressChart() {
     </motion.div>
   )
 }
-

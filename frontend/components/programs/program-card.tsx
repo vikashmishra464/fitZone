@@ -74,4 +74,3 @@ export function ProgramCard({ program }: ProgramProps) {
     </motion.div>
   )
 }
-

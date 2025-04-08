@@ -93,7 +93,7 @@ export function PricingCards() {
               ))}
             </ul>
 
-            <Link href="/contact">
+            <Link href={`/payment/${plan.name.toLowerCase()}`}>
               <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
                 Get Started
               </Button>
@@ -104,4 +104,3 @@ export function PricingCards() {
     </div>
   )
 }
-

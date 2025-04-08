@@ -68,4 +68,3 @@ export function GymIntro() {
     </section>
   )
 }
-

@@ -10,7 +10,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
-import { error } from "console"
 
 const formSchema = z
   .object({
@@ -131,4 +130,3 @@ export function RegisterForm() {
     </div>
   )
 }
-

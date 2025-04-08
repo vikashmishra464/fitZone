@@ -20,21 +20,24 @@ export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.push("/login")
-      } else if (user.role !== "admin") {
-        setIsAdmin(false)
-        router.push("/dashboard")
-      } else {
-        setIsAdmin(true)
-      }
-    }
-  }, [user, loading, router])
+  if (loading) return
 
-  if (loading || !isAdmin) {
-    return <div className="flex h-screen items-center justify-center">Loading...</div>
+  if (!user) {
+    router.replace("/login") // use replace to stop back button issue
+    return
   }
+
+  if (user.role !== "admin") {
+    router.replace("/dashboard")
+    return
+  }
+
+  setIsAdmin(true)
+}, [user, loading, router])
+
+if (loading || (!user && !isAdmin)) {
+  return <div className="flex h-screen items-center justify-center">Loading...</div>
+}
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -68,4 +71,3 @@ export default function AdminPage() {
     </div>
   )
 }
-

@@ -183,4 +183,3 @@ export function AttendanceStats({ attendance }: AttendanceStatsProps) {
     </div>
   )
 }
-

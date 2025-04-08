@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URL_AUTH);
 
 
 const User = require("./models/userModel");
-const MemberShip = require("./models/membershipModel");
+const MemberShip = require("./models/usermembershipModel");
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -23,10 +23,8 @@ app.post('/login', async (req, res) => {
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.json({ message: 'Invalid password' });
-  console.log(user);
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
-  console.log(token);
   res.json({
     message: 'Login successful',
     token,
@@ -43,7 +41,7 @@ app.post('/register', async (req, res) => {
   const role = "user";
   const count = await User.countDocuments().catch(() => 0)+1; // count is a number
   const id = count.toString(); 
-  const user = new User({id:toString(id),email, password: hashedPassword, name, role });
+  const user = new User({id:id,email, password: hashedPassword, name, role });
   await user.save();
   const curdateandtime = new Date();
   const newMembership = new MemberShip({ email, plan: "Free", joinDate: curdateandtime, status: "active" });
@@ -63,5 +61,17 @@ app.get('/membersdetails', verifyToken, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+const getPlans=require('./controller/getPlans');
+app.get("/plans",verifyToken,async(req,res)=>{
+  try {
+    const data = await getPlans();
+    res.json(data);
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
+
 
 app.listen(5000, () => console.log('Server running on port 5000'));

@@ -25,7 +25,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is stored in sessionStorage
     const storedUser = sessionStorage.getItem("fitzone_user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
@@ -37,11 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(userData)
     sessionStorage.setItem("fitzone_user", JSON.stringify(userData))
   }
-
   const logout = () => {
+    
     setUser(null)
-    sessionStorage.removeItem("token");  
     sessionStorage.removeItem("fitzone_user")
+    sessionStorage.removeItem("token")
+
   }
 
   return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>
@@ -54,4 +54,3 @@ export function useAuth() {
   }
   return context
 }
-

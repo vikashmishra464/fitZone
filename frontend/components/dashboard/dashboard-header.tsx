@@ -53,4 +53,3 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
     </motion.div>
   )
 }
-

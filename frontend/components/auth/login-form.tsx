@@ -18,6 +18,7 @@ const formSchema = z.object({
   rememberMe: z.boolean().default(false),
 })
 
+
 const ADMIN_EMAIL = "admin@fitzone.com"
 const ADMIN_PASSWORD = "admin123"
 const USER_EMAIL = "user@fitzone.com"
@@ -26,6 +27,7 @@ const USER_PASSWORD = "user123"
 function saveToken(currentToken) {
   sessionStorage.setItem("token",currentToken);
 }
+
 
 export function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -40,7 +42,8 @@ export function LoginForm() {
       password: "",
       rememberMe: false,
     },
-  });
+  })
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     try {
@@ -187,4 +190,3 @@ export function LoginForm() {
     </div>
   )
 }
-

@@ -90,4 +90,3 @@ export const programs = [
     participants: "Max 15",
   },
 ]
-

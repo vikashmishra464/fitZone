@@ -39,6 +39,7 @@ export function MembersTable({ members }: MembersTableProps) {
       };
       fetchMembers();
     }, []);
+    
   const filteredMembers = newmembers.filter(
     (member) =>
       member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -124,4 +125,3 @@ export function MembersTable({ members }: MembersTableProps) {
     </div>
   )
 }
-

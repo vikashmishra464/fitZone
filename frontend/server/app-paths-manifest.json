@@ -1,0 +1,8 @@
+{
+  "/payment/confirmation/[planId]/page": "app/payment/confirmation/[planId]/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/payment/[planId]/page": "app/payment/[planId]/page.js",
+  "/pricing/page": "app/pricing/page.js",
+  "/schedule/page": "app/schedule/page.js",
+  "/contact/page": "app/contact/page.js"
+}

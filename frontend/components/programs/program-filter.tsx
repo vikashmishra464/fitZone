@@ -32,4 +32,3 @@ export function ProgramFilter({ activeFilter, onFilterChange }: ProgramFilterPro
     </div>
   )
 }
-

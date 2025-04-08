@@ -1,9 +1,9 @@
 const User = require('../models/userModel');
-const Membership = require('../models/membershipModel');
+const userMembership = require('../models/usermembershipModel');
 
 async function getMergedUsers() {
   const users = await User.find();
-  const memberships = await Membership.find();
+  const memberships = await userMembership.find();
 
   const membershipMap = {};
   memberships.forEach(member => {

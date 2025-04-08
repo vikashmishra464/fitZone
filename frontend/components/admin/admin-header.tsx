@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef,useState,useEffect } from "react"
+import { useRef ,useState,useEffect} from "react"
 import { motion, useInView } from "framer-motion"
 import { Users, CreditCard, BarChart3 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
@@ -18,7 +18,7 @@ export function AdminHeader() {
     };
     fetchMembers();
   }, []);
-
+  // Calculate stats
   const totalMembers = newmembers.length
   const activeMembers = newmembers.filter((member) => member.status === "active").length
   const totalRevenue = newmembers.reduce((sum, member) => {
@@ -80,4 +80,3 @@ export function AdminHeader() {
     </motion.div>
   )
 }
-

@@ -18,4 +18,3 @@ export function Map() {
 
   return <div ref={mapRef} className="h-[300px] rounded-lg border shadow-sm" aria-label="Map showing gym location" />
 }
-

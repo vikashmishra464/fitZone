@@ -86,4 +86,3 @@ export function ScheduleTable({ schedule }: ScheduleTableProps) {
     </div>
   )
 }
-

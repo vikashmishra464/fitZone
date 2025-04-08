@@ -48,4 +48,3 @@ export const attendanceData = {
     { hour: "8 PM", count: 35 },
   ],
 }
-

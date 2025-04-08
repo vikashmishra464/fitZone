@@ -343,4 +343,3 @@ export const scheduleData = [
     ],
   },
 ]
-
