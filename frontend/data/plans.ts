@@ -1,6 +1,6 @@
 export const plans=async()=>{
     const token = sessionStorage.getItem("token");
-    const response = await fetch("http://localhost:5000/plans", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/plans`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
