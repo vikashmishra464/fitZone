@@ -41,7 +41,7 @@ export default function ProfilePage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { user, loading } = useAuth()
+  const { user, loading,login } = useAuth()
 
   const profileForm = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
@@ -67,7 +67,6 @@ export default function ProfilePage() {
       if (!user) {
         router.push("/login")
       } else {
-        // Set form values
         profileForm.reset({
           name: user.name,
           email: user.email,
@@ -79,33 +78,85 @@ export default function ProfilePage() {
     }
   }, [user, loading, router, profileForm])
 
-  function onProfileSubmit(values: z.infer<typeof profileFormSchema>) {
+  async function onProfileSubmit(values: z.infer<typeof profileFormSchema>) {
     setIsSubmitting(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      toast({
-        title: "Profile updated!",
-        description: "Your profile information has been updated successfully.",
-      })
-    }, 1500)
+    const sendData = async () => {
+      const token=sessionStorage.getItem("token");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prevemail:user.email,
+          name: values.name,
+          email: values.email
+        })
+      });
+      
+      const responseData = await response.json();
+    
+      if (responseData.message === "Successful") {
+        toast({
+          title: "Profile updated!",
+          description: "Your profile information has been updated successfully.",
+        });
+        login({
+          id: user.id,
+          name: values.name,
+          email: values.email,
+          membership:user.membership,
+          joinDate: user.joinDate,
+          role: user.role,
+        })
+      } else {
+        toast({
+          title: "Some Error Occurred",
+          description: "Please update your profile later",
+        });
+      }
+    };
+    sendData();
+    setIsSubmitting(false)
   }
 
   function onPasswordSubmit(values: z.infer<typeof passwordFormSchema>) {
     setIsSubmitting(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      toast({
-        title: "Password updated!",
-        description: "Your password has been changed successfully.",
-      })
-      passwordForm.reset()
-    }, 1500)
+    const sendData = async () => {
+      const token=sessionStorage.getItem("token");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.name,
+          pasword: values.confirmPassword,
+        })
+      });
+      
+      const responseData = await response.json();
+    
+      if (responseData.message === "Successful") {
+        toast({
+          title: "Password updated!",
+          description: "Your information has been updated successfully.",
+        });
+      } else {
+        toast({
+          title: "Some Error Occurred",
+          description: "Please update your profile later",
+        });
+      }
+    };
+    sendData();
+    setIsSubmitting(false);
+    passwordForm.reset()
   }
-
+  
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -113,6 +164,7 @@ export default function ProfilePage() {
       </div>
     )
   }
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -129,18 +181,18 @@ export default function ProfilePage() {
               <Card className="md:col-span-1">
                 <CardContent className="flex flex-col items-center p-6">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src="/placeholder.svg?height=96&width=96" alt={user.name} />
-                    <AvatarFallback className="text-2xl">{user.name.charAt(0)}</AvatarFallback>
+                    {user &&<AvatarImage src="/placeholder.svg?height=96&width=96" alt={user.name} />}
+                    {user &&<AvatarFallback className="text-2xl">{user.name.charAt(0)}</AvatarFallback>}
                   </Avatar>
-                  <h2 className="mt-4 text-xl font-bold">{user.name}</h2>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                  {user &&<h2 className="mt-4 text-xl font-bold">{user.name}</h2>}
+                  {user &&<p className="text-sm text-muted-foreground">{user.email}</p>}
 
                   <div className="mt-6 w-full space-y-4">
                     <div className="flex items-center space-x-3 rounded-md border p-3">
                       <CreditCard className="h-5 w-5 text-primary" />
                       <div>
                         <p className="text-sm font-medium">Membership</p>
-                        <p className="text-xs text-muted-foreground">{user.membership || "Basic"}</p>
+                        {user &&<p className="text-xs text-muted-foreground">{user.membership || "Basic"}</p>}
                       </div>
                     </div>
 
@@ -148,7 +200,7 @@ export default function ProfilePage() {
                       <Calendar className="h-5 w-5 text-primary" />
                       <div>
                         <p className="text-sm font-medium">Member Since</p>
-                        <p className="text-xs text-muted-foreground">{user.joinDate}</p>
+                        {user &&<p className="text-xs text-muted-foreground">{user.joinDate}</p>}
                       </div>
                     </div>
                   </div>

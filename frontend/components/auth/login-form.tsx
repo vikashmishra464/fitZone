@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
 import { Checkbox } from "@/components/ui/checkbox"
+import dotenv from 'dotenv'
+dotenv.config()
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -45,9 +47,12 @@ export function LoginForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+
     setIsSubmitting(true)
+    
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+        
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,22 +69,22 @@ export function LoginForm() {
             description: "Welcome to the admin dashboard.",
           })
           login({
-            id: "admin",
+            id: data.id,
             name: data.name,
-            email: values.email,
-            membership: "",
-            joinDate: "",
+            email: data.email,
+            membership:data.membership,
+            joinDate: data.joinDate,
             role: "admin",
           })
           saveToken(data.token);
           router.push("/admin")
         } else if (data.role === "user") {
           login({
-            id: "user",
+            id: data.id,
             name: data.name,
-            email: values.email,
-            membership: "",
-            joinDate: "",
+            email: data.email,
+            membership:data.membership,
+            joinDate: data.joinDate,
             role: "user",
           })
           toast({
@@ -94,11 +99,11 @@ export function LoginForm() {
             description: "Welcome back to FitZone.",
           })
           login({
-            id: "staff",
+            id: data.id,
             name: data.name,
-            email: values.email,
-            membership: "",
-            joinDate: "",
+            email: data.email,
+            membership:data.membership,
+            joinDate: data.joinDate,
             role: "staff",
           })
           saveToken(data.token);

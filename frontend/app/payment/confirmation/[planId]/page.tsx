@@ -20,7 +20,7 @@ export default function PaymentConfirmationPage() {
   const [selectedPlan, setSelectedPlan] = useState<any>(null)
   const router = useRouter()
   const params = useParams()
-  const { user, loading } = useAuth()
+  const { user, loading ,updateMembership } = useAuth()
   const { toast } = useToast()
   const planId = params.planId as string
 
@@ -37,7 +37,7 @@ export default function PaymentConfirmationPage() {
       if (!user) {
         router.push("/login")
       } else {
-        // Find the plan
+        
         plans().then((data) => {
         const plan = data.find((p) => p.id === planId)
         if (plan) {
@@ -61,6 +61,33 @@ export default function PaymentConfirmationPage() {
   )};
     }
   }, [user, loading, router, planId, toast])
+  useEffect(() => {
+    const getAndUpdatePlan = async () => {
+      const data = await plans(); // wait for plans to come
+      const plan = data.find((p) => p.id === planId); // find correct plan
+  
+      if (user && plan) {
+        const token = sessionStorage.getItem("token");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateMembership`, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: user.email,
+            plan: plan.name,
+          }),
+        });
+        updateMembership(plan.name);
+        const result = await response.json();
+        console.log(result.message);
+      }
+    };
+  
+    getAndUpdatePlan(); // call the function
+  }, []);
+  
 
   if (isLoading) {
     return (

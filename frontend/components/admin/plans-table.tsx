@@ -12,22 +12,33 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { MoreHorizontal, Plus } from "lucide-react"
+import { plans } from "@/data/plans"
+import { useEffect, useState } from "react"
+// interface Plan {
+//   id: string
+//   name: string
+//   price: number
+//   duration: string
+//   features: string[]
+//   memberCount: number
+//   popular: boolean
+// }
 
-interface Plan {
-  id: string
-  name: string
-  price: number
-  duration: string
-  features: string[]
-  memberCount: number
-  popular: boolean
-}
+// interface PlansTableProps {
+//   plans: Plan[]
+// }
 
-interface PlansTableProps {
-  plans: Plan[]
-}
-
-export function PlansTable({ plans }: PlansTableProps) {
+export function PlansTable() {
+  const [membershipPlans,setMembershipPlans]=useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await plans(); // call the async function and wait for result
+      setMembershipPlans(data);   // set the result
+    };
+  
+    fetchData(); // call the inner function
+  }, []);
+  
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
@@ -52,7 +63,7 @@ export function PlansTable({ plans }: PlansTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {plans.map((plan) => (
+            {membershipPlans.map((plan) => (
               <TableRow key={plan.id}>
                 <TableCell className="font-medium">
                   {plan.name}
@@ -89,7 +100,8 @@ export function PlansTable({ plans }: PlansTableProps) {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))}
+            ))
+          }
           </TableBody>
         </Table>
       </div>

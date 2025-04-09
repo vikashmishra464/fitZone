@@ -4,7 +4,6 @@ import { HeroSection } from "@/components/home/hero-section"
 import { GymIntro } from "@/components/home/gym-intro"
 import { Testimonials } from "@/components/home/testimonials"
 import { CallToAction } from "@/components/home/call-to-action"
-
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">

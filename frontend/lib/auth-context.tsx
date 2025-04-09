@@ -16,6 +16,7 @@ interface AuthContextType {
   loading: boolean
   login: (user: User) => void
   logout: () => void
+  updateMembership: (newMembership: any) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -36,15 +37,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(userData)
     sessionStorage.setItem("fitzone_user", JSON.stringify(userData))
   }
+
   const logout = () => {
-    
     setUser(null)
     sessionStorage.removeItem("fitzone_user")
     sessionStorage.removeItem("token")
 
   }
+  const updateMembership = (newMembership: any) => {
+    if (user) {
+      const updatedUser = { ...user, membership: newMembership }
+      setUser(updatedUser)
+      sessionStorage.setItem("fitzone_user", JSON.stringify(updatedUser))
+    }
+  }
 
-  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, loading, login, logout, updateMembership}}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {

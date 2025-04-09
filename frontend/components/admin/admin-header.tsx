@@ -22,7 +22,14 @@ export function AdminHeader() {
   const totalMembers = newmembers.length
   const activeMembers = newmembers.filter((member) => member.status === "active").length
   const totalRevenue = newmembers.reduce((sum, member) => {
-    const planPrice = member.plan === "Basic" ? 29 : member.plan === "Premium" ? 59 : 99
+    // const planPrice = member.plan === "Basic" ? 29 : member.plan === "Premium" ? 59 : 99
+    const planPrice =
+  member.plan === "free" ? 0 :
+  member.plan === "Basic" ? 29 :
+  member.plan === "Premium" ? 59 :
+  member.plan === "family" ? 99 :
+  member.plan === "elite" ? 99 :
+  0;
     return sum + planPrice
   }, 0)
 

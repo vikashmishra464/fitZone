@@ -16,11 +16,13 @@ import { plans } from "@/data/plans"
 
 export default function PlansManagementPage() {
   const [isLoading, setIsLoading] = useState(true)
-  const [localPlans, setLocalPlans] = useState([...plans])
+  const [localPlans, setLocalPlans] = useState([]);
   const { toast } = useToast()
   const router = useRouter()
   const { user, loading } = useAuth()
-
+  plans().then((data) => {
+    setLocalPlans(data);
+  });
   useEffect(() => {
     if (!loading) {
       if (!user) {

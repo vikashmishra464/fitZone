@@ -46,18 +46,23 @@ export default function EditPlanPage() {
         router.push("/dashboard")
       } else {
         // Find the plan
-        const foundPlan = plans.find((p) => p.id === planId)
-        if (foundPlan) {
-          setPlan(foundPlan)
-        } else {
-          toast({
-            title: "Plan not found",
-            description: "The membership plan you're trying to edit doesn't exist.",
-            variant: "destructive",
-          })
-          router.push("/admin/plans")
-        }
-        setIsLoading(false)
+        plans().then((data) => {
+          const foundPlan = data.find((p) => p.id === planId)
+          if (foundPlan) {
+            setPlan(foundPlan)
+          } else {
+            toast({
+              title: "Plan not found",
+              description: "The membership plan you're trying to edit doesn't exist.",
+              variant: "destructive",
+            })
+            router.push("/admin/plans")
+          }
+          setIsLoading(false)
+        });
+        
+        
+        
       }
     }
   }, [user, loading, router, planId, toast])
