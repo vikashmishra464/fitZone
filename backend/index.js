@@ -73,5 +73,5 @@ app.get("/plans",verifyToken,async(req,res)=>{
 });
 
 
-
-app.listen(5000, () => console.log('Server running on port 5000'));
+const PORT=process.env.PORT;
+app.listen((PORT || 5000 ), () => console.log('Server running on port 5000'));
