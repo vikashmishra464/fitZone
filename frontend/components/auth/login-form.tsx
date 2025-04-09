@@ -27,7 +27,7 @@ const USER_EMAIL = "user@fitzone.com"
 const USER_PASSWORD = "user123"
 
 function saveToken(currentToken) {
-  sessionStorage.setItem("token",currentToken);
+  localStorage.setItem("token",currentToken);
 }
 
 

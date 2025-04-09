@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("fitzone_user")
+    const storedUser = localStorage.getItem("fitzone_user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
     }
@@ -35,20 +35,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (userData: User) => {
     setUser(userData)
-    sessionStorage.setItem("fitzone_user", JSON.stringify(userData))
+    localStorage.setItem("fitzone_user", JSON.stringify(userData))
   }
 
   const logout = () => {
     setUser(null)
-    sessionStorage.removeItem("fitzone_user")
-    sessionStorage.removeItem("token")
+    localStorage.removeItem("fitzone_user")
+    localStorage.removeItem("token")
 
   }
   const updateMembership = (newMembership: any) => {
     if (user) {
       const updatedUser = { ...user, membership: newMembership }
       setUser(updatedUser)
-      sessionStorage.setItem("fitzone_user", JSON.stringify(updatedUser))
+      localStorage.setItem("fitzone_user", JSON.stringify(updatedUser))
     }
   }
 

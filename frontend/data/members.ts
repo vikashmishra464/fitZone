@@ -1,5 +1,5 @@
 export const members = async () => {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/membersdetails`, {
     method: "GET",
     headers: {

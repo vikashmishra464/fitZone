@@ -81,7 +81,7 @@ export default function ProfilePage() {
   async function onProfileSubmit(values: z.infer<typeof profileFormSchema>) {
     setIsSubmitting(true)
     const sendData = async () => {
-      const token=sessionStorage.getItem("token");
+      const token=localStorage.getItem("token");
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
         method: "POST",
         headers: {
@@ -125,7 +125,7 @@ export default function ProfilePage() {
     setIsSubmitting(true)
 
     const sendData = async () => {
-      const token=sessionStorage.getItem("token");
+      const token=localStorage.getItem("token");
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
         method: "POST",
         headers: {

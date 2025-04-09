@@ -67,7 +67,7 @@ export default function PaymentConfirmationPage() {
       const plan = data.find((p) => p.id === planId); // find correct plan
   
       if (user && plan) {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token");
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/updateMembership`, {
           method: "POST",
           headers: {
