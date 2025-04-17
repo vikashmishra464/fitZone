@@ -119,5 +119,9 @@ app.post("/updatePassword", verifyToken, async (req, res) => {
   }
 });
 
+app.get("/",(req,res)=>{
+  res.send("Fitzone Backend Running - By Vikash")
+})
+
 const PORT=process.env.PORT;
 app.listen((PORT || 5000 ), () => console.log('Server running on port 5000'));
