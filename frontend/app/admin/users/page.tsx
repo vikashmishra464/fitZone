@@ -34,7 +34,17 @@ export default function UsersManagementPage() {
   const { user, loading } = useAuth()
 
   // Combine members and staff for the user list
-  const allUsers = [...members.map((member) => ({ ...member, role: "member" })), ...staff]
+  
+  const [newmembers, setNewmembers] = useState([]);
+    // Calculate stats
+    useEffect(() => {
+      const fetchMembers = async () => {
+        const data = await members();
+        setNewmembers(data);
+      };
+      fetchMembers();
+    }, []);
+    const allUsers = [...newmembers.map((member) => ({ ...member, role: "member" })), ...staff]
 
   useEffect(() => {
     if (!loading) {

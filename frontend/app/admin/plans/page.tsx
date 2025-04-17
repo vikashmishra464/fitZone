@@ -21,7 +21,7 @@ export default function PlansManagementPage() {
   const router = useRouter()
   const { user, loading } = useAuth()
   plans().then((data) => {
-    setLocalPlans(data);
+    setPlans(data);
   });
   useEffect(() => {
     if (!loading) {
