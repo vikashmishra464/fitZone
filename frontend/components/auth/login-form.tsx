@@ -21,10 +21,6 @@ const formSchema = z.object({
 })
 
 
-const ADMIN_EMAIL = "admin@fitzone.com"
-const ADMIN_PASSWORD = "admin123"
-const USER_EMAIL = "user@fitzone.com"
-const USER_PASSWORD = "user123"
 
 function saveToken(currentToken) {
   localStorage.setItem("token",currentToken);
@@ -128,13 +124,6 @@ export function LoginForm() {
         <h2 className="text-xl font-semibold">Login to your account</h2>
         <p className="mt-1 text-sm text-muted-foreground">Enter your credentials below to access your account</p>
         <div className="mt-3 text-xs text-muted-foreground border-t pt-3">
-          <p className="font-medium">Demo Credentials:</p>
-          <p>
-            Admin: {ADMIN_EMAIL} / {ADMIN_PASSWORD}
-          </p>
-          <p>
-            User: {USER_EMAIL} / {USER_PASSWORD}
-          </p>
         </div>
       </div>
 
