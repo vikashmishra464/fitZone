@@ -14,7 +14,7 @@ This guide will help you set up the Fit Zone project on your local machine.
 Open your terminal and run:
 
 ```bash
-git clone [https://github.com/vikashmishra464/fitZone.git](https://github.com/vikashmishra464/fitZone.git)
+git clone https://github.com/vikashmishra464/fitZone.git
 ```
 
 This will download the project files.
